@@ -1,7 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
+//! Ensure input only appears when needed, e.g not on "/" route
+
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
-    <header className="bg-yellow-400 px-6 py-4 flex justify-between items-center">
-      <h1 className="text-xl font-mono tracking-wide">FAST REACT PIZZA CO.</h1>
+    <header className="bg-yellow-400 px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 h-15">
+      <h1
+        className="text-xl font-mono tracking-wide cursor-pointer"
+        onClick={() => navigate("/")}
+      >
+        FAST REACT PIZZA CO.
+      </h1>
       <input
         type="text"
         placeholder="Search order #"
