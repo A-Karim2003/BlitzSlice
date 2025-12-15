@@ -13,7 +13,7 @@ export default function Menu() {
     },
 
     {
-      id: 1,
+      id: 2,
       name: "Pepperoni",
       ingredients: "Tomato, Mozzarella, Pepperoni",
       price: 14.0,
@@ -23,7 +23,7 @@ export default function Menu() {
     },
 
     {
-      id: 1,
+      id: 3,
       name: "Pepperoni",
       ingredients: "Tomato, Mozzarella, Pepperoni",
       price: 14.0,
@@ -33,7 +33,7 @@ export default function Menu() {
     },
 
     {
-      id: 1,
+      id: 4,
       name: "Pepperoni",
       ingredients: "Tomato, Mozzarella, Pepperoni",
       price: 14.0,
@@ -43,7 +43,7 @@ export default function Menu() {
     },
 
     {
-      id: 1,
+      id: 5,
       name: "Pepperoni",
       ingredients: "Tomato, Mozzarella, Pepperoni",
       price: 14.0,
@@ -53,7 +53,7 @@ export default function Menu() {
     },
 
     {
-      id: 1,
+      id: 6,
       name: "Pepperoni",
       ingredients: "Tomato, Mozzarella, Pepperoni",
       price: 14.0,
@@ -63,7 +63,7 @@ export default function Menu() {
     },
 
     {
-      id: 1,
+      id: 7,
       name: "Pepperoni",
       ingredients: "Tomato, Mozzarella, Pepperoni",
       price: 14.0,
@@ -73,7 +73,7 @@ export default function Menu() {
     },
 
     {
-      id: 1,
+      id: 8,
       name: "Pepperoni",
       ingredients: "Tomato, Mozzarella, Pepperoni",
       price: 14.0,

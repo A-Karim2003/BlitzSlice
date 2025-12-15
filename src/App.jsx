@@ -3,8 +3,9 @@ import AppLayout from "./appLayout/AppLayout";
 
 /*===================Pages==================*/
 import Home from "./pages/home/Home";
-import Cart from "./pages/Cart/Cart";
-import Menu from "./pages/Menu/Menu";
+import Cart from "./pages/cart/Cart";
+import Menu from "./pages/menu/Menu";
+import Order from "./pages/order/Order";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: "menu", Component: Menu },
       { path: "cart", Component: Cart },
+      { path: "order", Component: Order },
     ],
   },
 ]);

@@ -41,7 +41,7 @@ export default function WelcomeScreen() {
           className="px-6 py-3 rounded-full bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 w-80 shadow-sm"
         />
 
-        <Button className="text-lg" onClick={submitName}>
+        <Button className="text-lg py-2 px-4" onClick={submitName}>
           Start ordering
         </Button>
       </div>
