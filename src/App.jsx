@@ -14,7 +14,13 @@ const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: "menu", Component: Menu },
       { path: "cart", Component: Cart },
-      { path: "order", Component: Order },
+      {
+        path: "order",
+        children: [
+          { path: "new", Component: Order },
+          { path: "'orderId'", Component: Order },
+        ],
+      },
     ],
   },
 ]);
