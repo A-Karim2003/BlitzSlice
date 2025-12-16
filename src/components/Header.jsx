@@ -7,20 +7,22 @@ export default function Header() {
   const isMenu = location.pathname === "/menu";
 
   return (
-    <header className="bg-yellow-400 px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 h-15">
-      <h1
-        className="text-xl font-mono tracking-wide cursor-pointer"
-        onClick={() => navigate("/")}
-      >
-        FAST REACT PIZZA CO.
-      </h1>
-      {isMenu && (
-        <input
-          type="text"
-          placeholder="Search order #"
-          className="px-4 py-2 rounded-full bg-yellow-50 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 w-64"
-        />
-      )}
+    <header className="bg-yellow-400 px-6 py-4  fixed top-0 left-0 right-0 h-15">
+      <div className="flex justify-between items-center max-w-4xl m-auto">
+        <h1
+          className="text-xl font-mono tracking-wide cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          FAST REACT PIZZA CO.
+        </h1>
+        {isMenu && (
+          <input
+            type="text"
+            placeholder="Search order #"
+            className="px-4 py-2 rounded-full bg-yellow-50 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 w-64"
+          />
+        )}
+      </div>
     </header>
   );
 }

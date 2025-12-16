@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         path: "order",
         children: [
           { path: "new", Component: Order },
-          { path: "'orderId'", Component: Order },
+          { path: ":orderId", Component: Order },
         ],
       },
     ],
