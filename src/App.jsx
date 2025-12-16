@@ -6,6 +6,7 @@ import Home from "./pages/home/Home";
 import Cart from "./pages/cart/Cart";
 import Menu from "./pages/menu/Menu";
 import Order from "./pages/order/Order";
+import OrderDetails from "./pages/order/OrderDetails";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
         path: "order",
         children: [
           { path: "new", Component: Order },
-          { path: ":orderId", Component: Order },
+          { path: ":orderId", Component: OrderDetails },
         ],
       },
     ],

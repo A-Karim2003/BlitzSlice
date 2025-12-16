@@ -6,7 +6,7 @@ export default function Cart() {
   const navigate = useNavigate();
 
   return (
-    <div className="py-8">
+    <div className="py-8 px-6">
       <button
         onClick={() => navigate("/menu")}
         className="text-blue-500 hover:text-blue-600 hover:underline text-sm mb-8 cursor-pointer"

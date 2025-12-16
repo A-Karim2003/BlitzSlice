@@ -32,7 +32,7 @@ export default function OrderForm() {
   console.log(address);
 
   return (
-    <div className="py-8 border px-6">
+    <div className="py-8 px-6">
       <h2 className="text-3xl font-semibold mb-8">Ready to order? Let's go!</h2>
 
       <form onSubmit={handleSubmit}>
