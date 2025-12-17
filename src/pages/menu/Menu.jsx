@@ -1,4 +1,6 @@
+import { useSelector } from "react-redux";
 import PizzaMenuItem from "../../components/PizzaMenuItem";
+import { getMenu } from "../../Services/apiRestaurant";
 
 export default function Menu() {
   const pizzas = [
@@ -90,4 +92,10 @@ export default function Menu() {
       ))}
     </div>
   );
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function loader() {
+  const menu = await getMenu();
+  return menu;
 }

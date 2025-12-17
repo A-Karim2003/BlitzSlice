@@ -1,7 +1,6 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Header() {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const isMenu = location.pathname === "/menu";
@@ -9,12 +8,12 @@ export default function Header() {
   return (
     <header className="bg-yellow-400 px-6 py-4  fixed top-0 left-0 right-0 h-15">
       <div className="flex justify-between items-center max-w-4xl m-auto">
-        <h1
+        <Link
           className="text-xl font-mono tracking-wide cursor-pointer"
-          onClick={() => navigate("/")}
+          to={"/"}
         >
           FAST REACT PIZZA CO.
-        </h1>
+        </Link>
         {isMenu && (
           <input
             type="text"
