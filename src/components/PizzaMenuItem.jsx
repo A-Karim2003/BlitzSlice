@@ -4,10 +4,6 @@ import CartItemControls from "./CartItemControls";
 function PizzaMenuItem({ menu }) {
   const { name, unitPrice, imageUrl, soldOut, ingredients } = menu;
 
-  console.log(name, unitPrice, imageUrl, soldOut, ingredients);
-
-  console.log(menu.unitPrice);
-
   return (
     <div
       className={`flex gap-6 px-4 py-4 border-b border-gray-200 ${
@@ -23,7 +19,9 @@ function PizzaMenuItem({ menu }) {
       <div className="flex-1">
         <div>
           <h3 className="text-xl font-semibold text-gray-800 mb-1">{name}</h3>
-          <p className="text-gray-500 italic text-sm mb-3">{ingredients}</p>
+          <p className="text-gray-700 italic text-md mb-3">
+            {ingredients.join(", ")}
+          </p>
 
           <div className="flex justify-between items-center">
             {soldOut ? (
@@ -34,7 +32,9 @@ function PizzaMenuItem({ menu }) {
               <p className="font-medium">€{Number(unitPrice).toFixed(2)}</p>
             )}
 
-            <Button className="text-sm px-5 py-2">Add to Cart</Button>
+            <Button className="text-sm px-5 py-2" disabled={soldOut}>
+              Add to Cart
+            </Button>
             {/* <CartItemControls /> */}
           </div>
         </div>

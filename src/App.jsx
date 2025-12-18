@@ -8,10 +8,12 @@ import Cart from "./pages/cart/Cart";
 import Menu from "./pages/menu/Menu";
 import Order from "./pages/order/Order";
 import OrderDetails from "./pages/order/OrderDetails";
+import RootError from "./components/RootError";
 
 const router = createBrowserRouter([
   {
     Component: AppLayout,
+    errorElement: <RootError />,
     children: [
       { index: true, Component: Home },
       { path: "menu", Component: Menu, loader: menuLoader },

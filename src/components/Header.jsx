@@ -6,7 +6,7 @@ export default function Header() {
   const isMenu = location.pathname === "/menu";
 
   return (
-    <header className="bg-yellow-400 px-6 py-4  fixed top-0 left-0 right-0 h-15">
+    <header className="bg-yellow-400 px-6 py-4  fixed top-0 left-0 right-0 h-15 z-50">
       <div className="flex justify-between items-center max-w-4xl m-auto">
         <Link
           className="text-xl font-mono tracking-wide cursor-pointer"
