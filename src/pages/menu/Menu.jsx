@@ -1,8 +1,11 @@
-import { useSelector } from "react-redux";
 import PizzaMenuItem from "../../components/PizzaMenuItem";
 import { getMenu } from "../../Services/apiRestaurant";
+import { useLoaderData } from "react-router-dom";
 
 export default function Menu() {
+  const menus = useLoaderData();
+  console.log(menus);
+
   const pizzas = [
     {
       id: 1,
@@ -87,8 +90,8 @@ export default function Menu() {
 
   return (
     <div>
-      {pizzas.map((pizza) => (
-        <PizzaMenuItem key={pizza.id} pizza={pizza} />
+      {pizzas.map((menus) => (
+        <PizzaMenuItem key={menus.id} menu={menus} />
       ))}
     </div>
   );

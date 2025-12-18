@@ -1,8 +1,12 @@
 import Button from "./Button";
 import CartItemControls from "./CartItemControls";
 
-function PizzaMenuItem({ pizza }) {
-  const { name, ingredients, price, image, soldOut } = pizza;
+function PizzaMenuItem({ menu }) {
+  const { name, unitPrice, imageUrl, soldOut, ingredients } = menu;
+
+  console.log(name, unitPrice, imageUrl, soldOut, ingredients);
+
+  console.log(menu.unitPrice);
 
   return (
     <div
@@ -11,7 +15,7 @@ function PizzaMenuItem({ pizza }) {
       }`}
     >
       <img
-        src={image}
+        src={imageUrl}
         alt={name}
         className="w-32 h-32 object-cover rounded-lg"
       />
@@ -27,7 +31,7 @@ function PizzaMenuItem({ pizza }) {
                 Sold Out
               </p>
             ) : (
-              <p className="font-medium">€{price.toFixed(2)}</p>
+              <p className="font-medium">€{Number(unitPrice).toFixed(2)}</p>
             )}
 
             <Button className="text-sm px-5 py-2">Add to Cart</Button>

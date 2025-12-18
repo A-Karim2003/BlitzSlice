@@ -51,7 +51,7 @@ export default function OrderDetails() {
       {/* Order Items */}
       <div className="mb-8 space-y-8">
         {orderItems.map((item) => (
-          <OrderItem item={item} />
+          <OrderItem key={item.id} item={item} />
         ))}
       </div>
 
