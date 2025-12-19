@@ -8,8 +8,6 @@ export default function AppLayout() {
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
 
-  console.log(isLoading);
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />

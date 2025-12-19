@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Button from "./Button";
 
 export default function WelcomeScreen() {
@@ -12,8 +12,9 @@ export default function WelcomeScreen() {
       toast.warn("Enter name to proceed");
       return;
     }
-
-    navigate("/menu");
+    // navigate("/menu");
+    //* temp solution for passing name
+    navigate("/menu", { state: { username: name } });
   }
 
   return (

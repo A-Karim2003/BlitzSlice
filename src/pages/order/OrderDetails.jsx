@@ -1,10 +1,17 @@
+import { useLoaderData } from "react-router-dom";
 import Button from "../../components/Button";
 import OrderItem from "../../components/OrderItem";
+import { getOrder } from "../../Services/apiRestaurant";
+import { formatDate } from "../../utils/helpers";
 
 export default function OrderDetails() {
+  const orderDetails = useLoaderData();
+  console.log(orderDetails);
+
+  const { customer, status, priority, cart, id: orderId } = orderDetails;
+  // const formattedDate = formatDate();
+
   // Static data
-  const orderNumber = "091RBJ";
-  const status = "PREPARING ORDER";
   const minutesLeft = 35;
   const estimatedDelivery = "Dec 16, 08:52 PM";
 
@@ -32,7 +39,7 @@ export default function OrderDetails() {
     <div className="py-8 px-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-semibold">Order #{orderNumber} status</h2>
+        <h2 className="text-3xl font-semibold">Order #{orderId} status</h2>
         <span className="bg-green-500 text-white font-semibold px-6 py-2.5 rounded-full uppercase text-sm">
           {status}
         </span>
@@ -44,7 +51,7 @@ export default function OrderDetails() {
           Only {minutesLeft} minutes left 😃
         </p>
         <p className="text-gray-600 text-sm">
-          (Estimated delivery: {estimatedDelivery})
+          (Estimated delivery: {estimatedDelivery})§
         </p>
       </div>
 
@@ -67,9 +74,17 @@ export default function OrderDetails() {
       </div>
 
       {/* Action Button */}
-      <div className="flex justify-end border">
+      <div className="flex justify-end">
         <Button className="py-2 px-5">Make Priority</Button>
       </div>
     </div>
   );
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function loader({ params }) {
+  const orderId = params.orderId;
+
+  const orderData = await getOrder(orderId);
+  return orderData;
 }

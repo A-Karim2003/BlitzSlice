@@ -2,12 +2,9 @@ import { toast } from "react-toastify";
 
 const API_URL = "https://react-fast-pizza-api.jonas.io/api";
 
-/**
- * Helper to handle fetch responses consistently
- */
 async function fetchJSON(url, options = {}) {
   const res = await fetch(url, options);
-  if (!res.ok) throw new Error(`Request failed (${res.status})`);
+  if (!res.ok) throw new Response(`Request failed (${res.status})`);
 
   return res.json();
 }

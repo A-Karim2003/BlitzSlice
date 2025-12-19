@@ -6,8 +6,11 @@ import { loader as menuLoader } from "./pages/menu/Menu";
 import Home from "./pages/home/Home";
 import Cart from "./pages/cart/Cart";
 import Menu from "./pages/menu/Menu";
-import Order from "./pages/order/Order";
-import OrderDetails from "./pages/order/OrderDetails";
+import Order, { action as orderAction } from "./pages/order/Order";
+
+import OrderDetails, {
+  loader as orderLoader,
+} from "./pages/order/OrderDetails";
 import RootError from "./components/RootError";
 
 const router = createBrowserRouter([
@@ -16,13 +19,19 @@ const router = createBrowserRouter([
     errorElement: <RootError />,
     children: [
       { index: true, Component: Home },
-      { path: "menu", Component: Menu, loader: menuLoader },
+      {
+        path: "menu",
+        Component: Menu,
+        loader: menuLoader,
+        errorElement: <RootError />,
+      },
       { path: "cart", Component: Cart },
       {
         path: "order",
+
         children: [
-          { path: "new", Component: Order },
-          { path: ":orderId", Component: OrderDetails },
+          { index: true, Component: Order, action: orderAction },
+          { path: ":orderId", Component: OrderDetails, loader: orderLoader },
         ],
       },
     ],
