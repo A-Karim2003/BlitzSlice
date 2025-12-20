@@ -1,14 +1,42 @@
 import Button from "../../components/Button";
 import OrderInput from "../../components/OrderInput";
 import PriorityCheckbox from "../../components/PriorityCheckbox";
-import { Form } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
+import { createOrder } from "../../Services/apiRestaurant";
+
+const fakeCart = [
+  {
+    pizzaId: 12,
+    name: "Mediterranean",
+    quantity: 2,
+    unitPrice: 16,
+    totalPrice: 32,
+  },
+  {
+    pizzaId: 6,
+    name: "Vegetale",
+    quantity: 1,
+    unitPrice: 13,
+    totalPrice: 13,
+  },
+  {
+    pizzaId: 11,
+    name: "Spinach and Mushroom",
+    quantity: 1,
+    unitPrice: 15,
+    totalPrice: 15,
+  },
+];
 
 export default function OrderForm() {
+  const cart = fakeCart;
   return (
     <div className="py-8 px-6">
       <h2 className="text-3xl font-semibold mb-8">Ready to order? Let's go!</h2>
 
       <Form method="POST">
+        <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+
         <OrderInput
           name={"firstName"}
           label={"First Name"}
@@ -49,7 +77,16 @@ export default function OrderForm() {
 export async function action({ request }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  console.log("DATA", data);
+  const newOrder = {
+    customer: data.firstName,
+    phone: data.phoneNumber,
+    address: data.address,
+    priority: data.priority === "on",
+    cart: JSON.parse(data.cart),
+  };
+  const createdOrder = await createOrder(newOrder);
 
-  return null;
+  console.log("Sending to API:", createdOrder);
+
+  return redirect(`/order/${createdOrder.id}`);
 }

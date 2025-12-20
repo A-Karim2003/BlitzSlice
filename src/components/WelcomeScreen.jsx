@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
 import { toast } from "react-toastify";
 import Button from "./Button";
+import Spinner from "./Spinner";
 
 export default function WelcomeScreen() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
-
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "loading";
   function submitName() {
     if (!name.trim()) {
       toast.warn("Enter name to proceed");
@@ -42,8 +44,16 @@ export default function WelcomeScreen() {
           className="px-6 py-3 rounded-full bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 w-80 shadow-sm"
         />
 
-        <Button className="text-lg py-2 px-4" onClick={submitName}>
-          Start ordering
+        <Button
+          className="text-lg py-2 px-4 flex items-center gap-5"
+          onClick={submitName}
+        >
+          {
+            isSubmitting ? <Spinner /> "Placing Order ":
+           "  Start ordering"
+          }
+          
+         
         </Button>
       </div>
     </div>
