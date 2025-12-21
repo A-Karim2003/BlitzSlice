@@ -1,10 +1,13 @@
-import { toast } from "react-toastify";
-
 const API_URL = "https://react-fast-pizza-api.jonas.io/api";
 
 async function fetchJSON(url, options = {}) {
   const res = await fetch(url, options);
-  if (!res.ok) throw new Response(`Request failed (${res.status})`);
+  if (!res.ok) {
+    throw new Response(`Request failed (${res.status})`, {
+      status: res.status,
+      statusText: res.statusText,
+    });
+  }
 
   return res.json();
 }
@@ -14,8 +17,7 @@ export async function getMenu() {
     const { data } = await fetchJSON(`${API_URL}/menu`);
     return data;
   } catch (error) {
-    toast.error(error.message);
-    throw error;
+    throw error.message;
   }
 }
 
@@ -24,7 +26,9 @@ export async function getOrder(id) {
     const { data } = await fetchJSON(`${API_URL}/order/${id}`);
     return data;
   } catch (error) {
-    toast.error(error.message);
+    if (error.status === 404) {
+      throw new Response("Order not found", { status: 404 });
+    }
     throw error;
   }
 }
@@ -41,8 +45,7 @@ export async function createOrder(newOrder) {
 
     return data;
   } catch (error) {
-    toast.error("Failed creating your order");
-    throw error;
+    throw error.message;
   }
 }
 
@@ -56,7 +59,6 @@ export async function updateOrder(id, updateObj) {
       body: JSON.stringify(updateObj),
     });
   } catch (error) {
-    toast.error("Failed updating your order");
-    throw error;
+    throw error.message;
   }
 }

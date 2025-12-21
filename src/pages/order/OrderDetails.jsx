@@ -6,7 +6,6 @@ import { formatDate } from "../../utils/helpers";
 
 export default function OrderDetails() {
   const orderDetails = useLoaderData();
-  console.log(orderDetails);
 
   const { customer, status, priority, cart, id: orderId } = orderDetails;
   // const formattedDate = formatDate();

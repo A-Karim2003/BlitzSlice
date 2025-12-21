@@ -7,8 +7,7 @@ import Spinner from "./Spinner";
 export default function WelcomeScreen() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "loading";
+
   function submitName() {
     if (!name.trim()) {
       toast.warn("Enter name to proceed");
@@ -48,12 +47,7 @@ export default function WelcomeScreen() {
           className="text-lg py-2 px-4 flex items-center gap-5"
           onClick={submitName}
         >
-          {
-            isSubmitting ? <Spinner /> "Placing Order ":
-           "  Start ordering"
-          }
-          
-         
+          Start ordering
         </Button>
       </div>
     </div>
