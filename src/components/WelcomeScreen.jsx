@@ -2,20 +2,21 @@ import { useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
 import { toast } from "react-toastify";
 import Button from "./Button";
-import Spinner from "./Spinner";
+import { useDispatch } from "react-redux";
+import { createUser } from "../features/user/userSlice";
 
 export default function WelcomeScreen() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function submitName() {
     if (!name.trim()) {
       toast.warn("Enter name to proceed");
       return;
     }
-    // navigate("/menu");
-    //* temp solution for passing name
-    navigate("/menu", { state: { username: name } });
+    dispatch(createUser(name));
+    navigate("/menu");
   }
 
   return (

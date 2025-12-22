@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
   const navigate = useNavigate();
   const [searchquery, setSearchQuery] = useState("");
 
-  const location = useLocation();
-  const { username } = location?.state || "";
+  const { user } = useSelector((store) => store.user);
 
   function submitOrder(e) {
     e.preventDefault();
@@ -34,7 +34,7 @@ export default function Header() {
           />
         </form>
 
-        {username && username}
+        {user}
       </div>
     </header>
   );

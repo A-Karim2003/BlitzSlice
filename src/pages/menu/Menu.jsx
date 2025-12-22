@@ -4,7 +4,6 @@ import { useLoaderData } from "react-router-dom";
 
 export default function Menu() {
   const menus = useLoaderData();
-
   return (
     <div>
       {menus.map((menu) => (
