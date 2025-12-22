@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Button from "./Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../features/user/userSlice";
+import NameCaptureForm from "./NameCaptureForm";
+import Button from "./Button";
 
 export default function WelcomeScreen() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.user);
 
   function submitName() {
     if (!name.trim()) {
@@ -28,29 +30,21 @@ export default function WelcomeScreen() {
         Straight out of the oven, straight to you.
       </p>
 
-      <div className="flex items-center justify-center gap-2 mb-6">
-        <span className="text-2xl">👋</span>
-        <p className="text-gray-700">
-          Welcome! Please start by telling us your name:
-        </p>
-      </div>
-      <div className="flex flex-col items-center gap-6">
-        <input
-          type="text"
-          placeholder="Your full name"
+      {!user ? (
+        <NameCaptureForm
           value={name}
           onChange={(e) => setName(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && submitName()}
-          className="px-6 py-3 rounded-full bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 w-80 shadow-sm"
+          onKeydown={(e) => e.key === "Enter" && submitName()}
+          submitName={submitName}
         />
-
+      ) : (
         <Button
-          className="text-lg py-2 px-4 flex items-center gap-5"
-          onClick={submitName}
+          className="px-6 py-2 uppercase"
+          onClick={() => navigate("/menu")}
         >
-          Start ordering
+          Continue ordering, {user}
         </Button>
-      </div>
+      )}
     </div>
   );
 }

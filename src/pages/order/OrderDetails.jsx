@@ -83,7 +83,6 @@ export default function OrderDetails() {
 // eslint-disable-next-line react-refresh/only-export-components
 export async function loader({ params }) {
   const orderId = params.orderId;
-
   const orderData = await getOrder(orderId);
   return orderData;
 }

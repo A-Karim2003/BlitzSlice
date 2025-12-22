@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getAddress } from "../../Services/apiGeolcoding";
 
 const initialState = {
-  user: null,
+  user: "",
+  message: "",
 };
 
 /*
@@ -37,8 +38,15 @@ const userSlice = createSlice({
     createUser(state, action) {
       state.user = action.payload;
     },
+
+    setMessage(state, action) {
+      state.message = action.payload;
+    },
+    clearMessage(state) {
+      state.message = "";
+    },
   },
 });
 
-export const { createUser } = userSlice.actions;
+export const { createUser, setMessage, clearMessage } = userSlice.actions;
 export default userSlice.reducer;

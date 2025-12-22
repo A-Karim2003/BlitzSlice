@@ -5,6 +5,7 @@ import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../Services/apiRestaurant";
 import Spinner from "../../components/Spinner";
 import validateOrder from "../../utils/formValidation";
+import { useSelector } from "react-redux";
 
 const fakeCart = [
   {
@@ -34,8 +35,7 @@ export default function OrderForm() {
   const navigation = useNavigation();
   const error = useActionData();
   const isSubmitting = navigation.state === "submitting";
-
-  console.log(error);
+  const { user } = useSelector((store) => store.user);
 
   const cart = fakeCart;
   return (
@@ -51,6 +51,7 @@ export default function OrderForm() {
           inputId={"customer"}
           type={"text"}
           error={error}
+          defaultValue={user}
         />
 
         <OrderInput

@@ -5,6 +5,7 @@ export default function OrderInput({
   type,
   name,
   error,
+  defaultValue,
 }) {
   const errorMessage = error?.[name];
 
@@ -15,6 +16,7 @@ export default function OrderInput({
       </label>
       <div className="relative h-12 flex-1 flex flex-col gap-2 mb-6">
         <input
+          defaultValue={defaultValue || ""}
           name={name}
           type={type ? type : ""}
           id={inputId}

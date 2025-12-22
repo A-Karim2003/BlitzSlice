@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import CartItemControls from "../../components/CartItemControls";
 import Button from "../../components/Button";
+import { useSelector } from "react-redux";
 
 export default function Cart() {
   const navigate = useNavigate();
+  const { user } = useSelector((store) => store.user);
 
   return (
     <div className="py-8 px-6">
@@ -14,7 +16,7 @@ export default function Cart() {
         ← Back to menu
       </button>
 
-      <h2 className="text-3xl font-semibold mb-8">Your cart,</h2>
+      <h2 className="text-3xl font-semibold mb-8">Your cart, {user}</h2>
 
       <div className="mb-8 ">
         <div className="flex items-center justify-between py-4 border-b border-gray-200">

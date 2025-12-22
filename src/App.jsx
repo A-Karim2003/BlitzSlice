@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: Home }, // public route
       {
-        loader: requireName,
+        //! loader: requireName,
         children: [
           // protected routes
           {
