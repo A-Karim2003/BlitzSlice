@@ -6,6 +6,7 @@ import { formatCurrency } from "../utils/helpers";
 export default function Footer() {
   const cartQuantity = useSelector(getCartQuantity);
   const totalCartPrice = useSelector(getTotalCartPrice);
+  console.log(totalCartPrice);
 
   if (!cartQuantity) return null;
 
