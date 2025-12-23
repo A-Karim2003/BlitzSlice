@@ -1,8 +1,25 @@
+import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
 import CartItemControls from "./CartItemControls";
+import { addItem } from "../features/cart/cartSlice";
+import { formatCurrency } from "../utils/helpers";
 
 function PizzaMenuItem({ menu }) {
-  const { name, unitPrice, imageUrl, soldOut, ingredients } = menu;
+  const dispatch = useDispatch();
+  const { id, name, unitPrice, imageUrl, soldOut, ingredients } = menu;
+  const cart = useSelector((store) => store.cart);
+
+  function handleAddToCart() {
+    const item = {
+      pizzaId: id,
+      name,
+      quantity: 1,
+      unitPrice,
+      totalPrice: unitPrice,
+    };
+
+    dispatch(addItem(item));
+  }
 
   return (
     <div
@@ -29,12 +46,18 @@ function PizzaMenuItem({ menu }) {
                 Sold Out
               </p>
             ) : (
-              <p className="font-medium">€{Number(unitPrice).toFixed(2)}</p>
+              <p className="font-medium">{formatCurrency(unitPrice)}</p>
             )}
 
-            <Button className="text-sm px-5 py-2" disabled={soldOut}>
-              Add to Cart
-            </Button>
+            {!menu.soldOut && (
+              <Button
+                className="text-sm px-5 py-2"
+                disabled={soldOut}
+                onClick={handleAddToCart}
+              >
+                Add to Cart
+              </Button>
+            )}
             {/* <CartItemControls /> */}
           </div>
         </div>

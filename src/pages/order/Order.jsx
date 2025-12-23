@@ -6,6 +6,7 @@ import { createOrder } from "../../Services/apiRestaurant";
 import Spinner from "../../components/Spinner";
 import validateOrder from "../../utils/formValidation";
 import { useSelector } from "react-redux";
+import { getCart } from "../../features/cart/cartSlice";
 
 const fakeCart = [
   {
@@ -36,15 +37,12 @@ export default function OrderForm() {
   const error = useActionData();
   const isSubmitting = navigation.state === "submitting";
   const { user } = useSelector((store) => store.user);
-
-  const cart = fakeCart;
   return (
     <div className="py-8 px-6">
       <h2 className="text-3xl font-semibold mb-8">Ready to order? Let's go!</h2>
-
+      //! Revisit this code
+      <input type="hidden" name="cart" value={JSON.stringify(fakeCart)} />
       <Form method="POST">
-        <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-
         <OrderInput
           name={"customer"}
           label={"First Name"}

@@ -2,10 +2,12 @@ import { useNavigate } from "react-router-dom";
 import CartItemControls from "../../components/CartItemControls";
 import Button from "../../components/Button";
 import { useSelector } from "react-redux";
+import { getCart } from "../../features/cart/cartSlice";
 
 export default function Cart() {
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.user);
+  const cart = useSelector(getCart);
 
   return (
     <div className="py-8 px-6">
@@ -17,16 +19,17 @@ export default function Cart() {
       </button>
 
       <h2 className="text-3xl font-semibold mb-8">Your cart, {user}</h2>
-
-      <div className="mb-8 ">
-        <div className="flex items-center justify-between py-4 border-b border-gray-200">
-          <span className="text-lg">1× Margherita</span>
-          <div className="flex items-center gap-6 ">
-            <span className="font-semibold">€12.00</span>
-            <CartItemControls />
+      {cart.map((item) => (
+        <div className="mb-8" key={item.pizzaId}>
+          <div className="flex items-center justify-between py-4 border-b border-gray-200">
+            <span className="text-lg">1× Margherita</span>
+            <div className="flex items-center gap-6 ">
+              <span className="font-semibold">€12.00</span>
+              <CartItemControls />
+            </div>
           </div>
         </div>
-      </div>
+      ))}
 
       <div className="flex gap-4 ">
         <Button
