@@ -40,9 +40,8 @@ export default function OrderForm() {
   return (
     <div className="py-8 px-6">
       <h2 className="text-3xl font-semibold mb-8">Ready to order? Let's go!</h2>
-      //! Revisit this code
-      <input type="hidden" name="cart" value={JSON.stringify(fakeCart)} />
       <Form method="POST">
+        <input type="hidden" name="cart" value={JSON.stringify(fakeCart)} />
         <OrderInput
           name={"customer"}
           label={"First Name"}
@@ -109,6 +108,9 @@ export async function action({ request }) {
     priority: data.priority === "on",
     cart: JSON.parse(data.cart),
   };
+
+  console.log(newOrder.cart);
+
   const createdOrder = await createOrder(newOrder);
 
   return redirect(`/order/${createdOrder.id}`);

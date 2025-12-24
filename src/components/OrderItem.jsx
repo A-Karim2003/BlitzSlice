@@ -1,5 +1,4 @@
-import React from "react";
-
+import { formatCurrency } from "../utils/helpers";
 export default function OrderItem({ item }) {
   return (
     <div key={item.id} className="flex items-start justify-between">
@@ -9,7 +8,7 @@ export default function OrderItem({ item }) {
         </p>
         <p className="text-gray-500 italic text-sm">{item.ingredients}</p>
       </div>
-      <p className="font-semibold text-lg">€{item.price.toFixed(2)}</p>
+      <p className="font-semibold text-lg">{formatCurrency(item.unitPrice)}</p>
     </div>
   );
 }

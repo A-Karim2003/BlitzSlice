@@ -32,10 +32,16 @@ const cartSlice = createSlice({
       item.totalPrice = item.unitPrice * (item.quantity || 1);
     },
     decreaseItemQuantity(state, action) {
-      if (!state.cart.length) return;
-
       const item = state.cart.find((item) => item.pizzaId === action.payload);
+
       item.quantity--;
+
+      // if quantity reaches 0, remove item from cart
+      if (item.quantity === 0)
+        state.cart = state.cart.filter(
+          (cartItem) => cartItem.pizzaId !== item.pizzaId
+        );
+
       item.totalPrice = item.unitPrice * item.quantity;
     },
     clearCart(state) {

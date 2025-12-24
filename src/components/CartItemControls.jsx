@@ -1,7 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "./Button";
-
-import { getCartItem } from "../features/cart/cartSlice";
 
 import {
   clearCart,
@@ -9,19 +7,18 @@ import {
   increaseItemQuantity,
 } from "../features/cart/cartSlice";
 
-export default function CartItemControls({ id }) {
+export default function CartItemControls({ cartItem }) {
   const dispatch = useDispatch();
-  const cartItem = useSelector(getCartItem(id));
 
   function increment() {
-    dispatch(increaseItemQuantity(id));
+    dispatch(increaseItemQuantity(cartItem.pizzaId));
   }
   function decrement() {
-    dispatch(decreaseItemQuantity(id));
+    dispatch(decreaseItemQuantity(cartItem.pizzaId));
   }
 
   function emptyCart() {
-    dispatch(clearCart(id));
+    dispatch(clearCart(cartItem.pizzaId));
   }
 
   return (

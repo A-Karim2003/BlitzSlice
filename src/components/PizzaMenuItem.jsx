@@ -51,7 +51,7 @@ function PizzaMenuItem({ menu }) {
             )}
 
             {showControls ? (
-              <CartItemControls id={cartItem.id} />
+              <CartItemControls cartItem={cartItem} />
             ) : (
               !soldOut && (
                 <Button

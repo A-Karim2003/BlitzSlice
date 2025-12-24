@@ -2,18 +2,17 @@ import { useLoaderData } from "react-router-dom";
 import Button from "../../components/Button";
 import OrderItem from "../../components/OrderItem";
 import { getOrder } from "../../Services/apiRestaurant";
-import { formatDate } from "../../utils/helpers";
+import { calcMinutesLeft, formatDate } from "../../utils/helpers";
 
 export default function OrderDetails() {
   const orderDetails = useLoaderData();
+  //! Implement cart details on 24th december 08:03am :))))
 
-  const { customer, status, priority, cart, id: orderId } = orderDetails;
-  // const formattedDate = formatDate();
+  const { orderId, priority, cart, status, estimatedDelivery } = orderDetails;
+  const formattedEstimatedDelivery = formatDate(estimatedDelivery);
+  const remainngTime = calcMinutesLeft(estimatedDelivery);
 
   // Static data
-  const minutesLeft = 35;
-  const estimatedDelivery = "Dec 16, 08:52 PM";
-
   const orderItems = [
     {
       id: 1,
@@ -38,7 +37,9 @@ export default function OrderDetails() {
     <div className="py-8 px-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-semibold">Order #{orderId} status</h2>
+        <h2 className="text-2xl font-semibold text-stone-600 tracking-wider">
+          Order #{orderId} status
+        </h2>
         <span className="bg-green-500 text-white font-semibold px-6 py-2.5 rounded-full uppercase text-sm">
           {status}
         </span>
@@ -47,17 +48,17 @@ export default function OrderDetails() {
       {/* Delivery Info */}
       <div className="bg-gray-200 px-6 py-6 rounded-lg mb-8 flex items-center justify-between">
         <p className="text-lg font-semibold">
-          Only {minutesLeft} minutes left 😃
+          Only {remainngTime} minutes left 😃
         </p>
         <p className="text-gray-600 text-sm">
-          (Estimated delivery: {estimatedDelivery})§
+          (Estimated delivery: {formattedEstimatedDelivery})
         </p>
       </div>
 
       {/* Order Items */}
       <div className="mb-8 space-y-8">
-        {orderItems.map((item) => (
-          <OrderItem key={item.id} item={item} />
+        {cart.map((item) => (
+          <OrderItem key={item.pizzaId} item={item} />
         ))}
       </div>
 
@@ -80,9 +81,12 @@ export default function OrderDetails() {
   );
 }
 
+//* loader used to fetch order details before component renders
 // eslint-disable-next-line react-refresh/only-export-components
 export async function loader({ params }) {
   const orderId = params.orderId;
   const orderData = await getOrder(orderId);
+  console.log(orderData);
+
   return orderData;
 }

@@ -12,7 +12,7 @@ export default function CartItem({ item }) {
           <span className="font-semibold">
             {formatCurrency(item.unitPrice)}
           </span>
-          <CartItemControls id={item.pizzaId} />
+          <CartItemControls cartItem={item} />
         </div>
       </div>
     </div>
