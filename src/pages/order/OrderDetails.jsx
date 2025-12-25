@@ -1,48 +1,69 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useRevalidator } from "react-router-dom";
 import Button from "../../components/Button";
 import OrderItem from "../../components/OrderItem";
-import { getOrder } from "../../Services/apiRestaurant";
-import { calcMinutesLeft, formatDate } from "../../utils/helpers";
+import { getOrder, updateOrder } from "../../Services/apiRestaurant";
+import {
+  calcMinutesLeft,
+  formatCurrency,
+  formatDate,
+} from "../../utils/helpers";
 
 export default function OrderDetails() {
   const orderDetails = useLoaderData();
-  //! Implement cart details on 24th december 08:03am :))))
+  const revalidator = useRevalidator();
+  console.log(orderDetails);
 
-  const { orderId, priority, cart, status, estimatedDelivery } = orderDetails;
+  const {
+    id,
+    cart,
+    status,
+    estimatedDelivery,
+    orderPrice,
+    priority,
+    priorityPrice,
+  } = orderDetails;
+  console.log();
+
   const formattedEstimatedDelivery = formatDate(estimatedDelivery);
   const remainngTime = calcMinutesLeft(estimatedDelivery);
 
+  /*
+  How revalidate works:
+    1. revalidate() is called
+    2. Router marks route as "loading"
+    3. Loader runs again
+    4. Loader returns new data
+    5. useLoaderData() receives new data
+    6. React re-renders the component 
+  */
+  async function updateOrderPriority() {
+    const updatedOrder = {
+      ...orderDetails,
+      priority: true,
+    };
+    await updateOrder(id, updatedOrder);
+
+    revalidator.revalidate();
+  }
+
   // Static data
-  const orderItems = [
-    {
-      id: 1,
-      quantity: 1,
-      name: "Diavola",
-      ingredients: "Tomato, Mozzarella, Spicy Salami, Chili Flakes",
-      price: 16.0,
-    },
-    {
-      id: 2,
-      quantity: 3,
-      name: "Vegetale",
-      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Mushrooms",
-      price: 39.0,
-    },
-  ];
-
-  const pizzaPrice = 55.0;
-  const totalPrice = 55.0;
-
   return (
     <div className="py-8 px-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-semibold text-stone-600 tracking-wider">
-          Order #{orderId} status
+          Order #{id} status
         </h2>
-        <span className="bg-green-500 text-white font-semibold px-6 py-2.5 rounded-full uppercase text-sm">
-          {status}
-        </span>
+        <div className="flex gap-3">
+          {priority && (
+            <button className="bg-red-600 text-white font-semibold px-6 py-2.5 rounded-full uppercase text-sm">
+              Priority
+            </button>
+          )}
+          <button className="bg-green-500 text-white font-semibold px-6 py-2.5 rounded-full uppercase text-sm">
+            {status}
+          </button>
+        </div>
       </div>
 
       {/* Delivery Info */}
@@ -64,18 +85,30 @@ export default function OrderDetails() {
 
       {/* Price Summary */}
       <div className="bg-gray-200 px-6 py-6 rounded-lg mb-8 space-y-2">
-        <p className="text-lg">
-          Price pizza:
-          <span className="font-semibold"> €{pizzaPrice.toFixed(2)} </span>
+        <p className="font-semibold">
+          Pizza price:
+          <span className="text-stone-700"> {formatCurrency(orderPrice)} </span>
         </p>
-        <p className="text-lg font-semibold">
-          To pay on delivery: <span>€{totalPrice.toFixed(2)}</span>
+        {priority && (
+          <p className="font-semibold">
+            Priority price:{" "}
+            <span className="text-stone-700">
+              {formatCurrency(priorityPrice)}
+            </span>
+          </p>
+        )}
+        <p className="font-semibold">
+          To pay on delivery:{" "}
+          <span className="text-stone-800 font-black">
+            {formatCurrency(orderPrice + priorityPrice)}
+          </span>
         </p>
       </div>
 
-      {/* Action Button */}
       <div className="flex justify-end">
-        <Button className="py-2 px-5">Make Priority</Button>
+        <Button className="py-2 px-5" onClick={updateOrderPriority}>
+          Make Priority
+        </Button>
       </div>
     </div>
   );
@@ -86,7 +119,6 @@ export default function OrderDetails() {
 export async function loader({ params }) {
   const orderId = params.orderId;
   const orderData = await getOrder(orderId);
-  console.log(orderData);
 
   return orderData;
 }

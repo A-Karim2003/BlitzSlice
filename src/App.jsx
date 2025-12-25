@@ -7,7 +7,10 @@ import Home from "./pages/home/Home";
 import Cart from "./pages/cart/Cart";
 import Menu from "./pages/menu/Menu";
 
-import Order, { action as orderAction } from "./pages/order/Order";
+import Order, {
+  action as orderAction,
+  loader as orderFormLoader,
+} from "./pages/order/Order";
 
 import OrderDetails, {
   loader as orderLoader,
@@ -36,7 +39,12 @@ const router = createBrowserRouter([
           {
             path: "order",
             children: [
-              { index: true, Component: Order, action: orderAction },
+              {
+                index: true,
+                Component: Order,
+                action: orderAction,
+                loader: orderFormLoader,
+              },
               {
                 path: ":orderId",
                 Component: OrderDetails,

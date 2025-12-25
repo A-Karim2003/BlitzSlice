@@ -17,6 +17,7 @@ function PizzaMenuItem({ menu }) {
       quantity: 1,
       unitPrice,
       totalPrice: unitPrice,
+      ingredients,
     };
 
     dispatch(addItem(item));

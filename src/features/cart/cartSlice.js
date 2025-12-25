@@ -18,11 +18,11 @@ const cartSlice = createSlice({
         item.quantity++;
         return;
       }
-
       // else add item
       state.cart.push(action.payload);
     },
     deleteItem(state, action) {
+      // payload in id
       state.cart = state.cart.filter((item) => item.pizzaId !== action.payload);
     },
     increaseItemQuantity(state, action) {
@@ -48,6 +48,8 @@ const cartSlice = createSlice({
       state.cart = [];
     },
   },
+
+  extraReducers: {},
 });
 
 export const {

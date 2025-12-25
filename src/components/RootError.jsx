@@ -6,7 +6,6 @@ export default function RootError() {
   const routeError = useRouteError();
   const errorMessage = routeError.data;
   const errorStatus = routeError.status;
-  console.log(routeError);
 
   const navigate = useNavigate();
 

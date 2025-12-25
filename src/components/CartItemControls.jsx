@@ -2,8 +2,8 @@ import { useDispatch } from "react-redux";
 import Button from "./Button";
 
 import {
-  clearCart,
   decreaseItemQuantity,
+  deleteItem,
   increaseItemQuantity,
 } from "../features/cart/cartSlice";
 
@@ -18,7 +18,7 @@ export default function CartItemControls({ cartItem }) {
   }
 
   function emptyCart() {
-    dispatch(clearCart(cartItem.pizzaId));
+    dispatch(deleteItem(cartItem.pizzaId));
   }
 
   return (
