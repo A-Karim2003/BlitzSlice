@@ -22,11 +22,10 @@ const router = createBrowserRouter([
   {
     Component: AppLayout,
     errorElement: <RootError />,
-    // loader: requireName, // Route protection
     children: [
       { index: true, Component: Home }, // public route
       {
-        //! loader: requireName,
+        loader: requireName,
         children: [
           // protected routes
           {

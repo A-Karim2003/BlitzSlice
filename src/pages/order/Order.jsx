@@ -1,17 +1,11 @@
 import Button from "../../components/Button";
 import OrderInput from "../../components/OrderInput";
 import PriorityCheckbox from "../../components/PriorityCheckbox";
-import {
-  Form,
-  redirect,
-  useActionData,
-  useLoaderData,
-  useNavigation,
-} from "react-router-dom";
+import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../Services/apiRestaurant";
 import Spinner from "../../components/Spinner";
 import validateOrder from "../../utils/formValidation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   clearCart,
   getCart,
@@ -19,18 +13,32 @@ import {
 } from "../../features/cart/cartSlice";
 import store from "../../store";
 import { formatCurrency } from "../../utils/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchAddress } from "../../features/user/userSlice";
 
 export default function OrderForm() {
+  const dispatch = useDispatch();
   const [isChecked, setIsChecked] = useState(false);
+  const [userAddress, setUserAddress] = useState("");
   const navigation = useNavigation();
   const error = useActionData();
   const isSubmitting = navigation.state === "submitting";
-  const { user } = useSelector((store) => store.user);
+  const {
+    user,
+    address,
+    status,
+    error: geolocationError,
+  } = useSelector((store) => store.user);
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
   const priorityFee = Math.floor(isChecked ? totalCartPrice * 0.2 : 0);
-  console.log(priorityFee);
+
+  useEffect(() => {
+    if (address) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUserAddress(address);
+    }
+  }, [address]);
 
   return (
     <div className="py-8 px-6">
@@ -59,13 +67,21 @@ export default function OrderForm() {
           label={"Address"}
           inputId={"address"}
           error={error}
+          setUserAddress={setUserAddress}
+          userAddress={userAddress}
+          geolocationError={geolocationError}
         >
           <Button
             className={
-              "absolute right-1 top-[50%] translate-y-[-50%] px-4 py-2 text-xs h-[80%] font-black"
+              "absolute right-1 top-5.5 translate-y-[-50%] px-4 py-2 text-xs font-black flex gap-4 items-center h-10"
             }
             type="button"
+            onClick={() => {
+              dispatch(fetchAddress());
+            }}
+            disabled={status === "loading"}
           >
+            {status === "loading" && <Spinner />}
             GET POSITION
           </Button>
         </OrderInput>
@@ -114,7 +130,6 @@ export async function action({ request }) {
     address: data.address,
     priority: data.priority === "on",
     cart: JSON.parse(data.cart),
-    test: "Testing",
   };
 
   const createdOrder = await createOrder(newOrder);

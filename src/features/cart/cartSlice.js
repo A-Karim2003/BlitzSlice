@@ -48,8 +48,6 @@ const cartSlice = createSlice({
       state.cart = [];
     },
   },
-
-  extraReducers: {},
 });
 
 export const {

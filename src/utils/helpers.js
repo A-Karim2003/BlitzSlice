@@ -19,3 +19,13 @@ export function calcMinutesLeft(dateStr) {
   const d2 = new Date(dateStr).getTime();
   return Math.round((d2 - d1) / 60000);
 }
+
+export function formatUKAddress(addressObj) {
+  const town = addressObj.locality;
+  const city = addressObj.city;
+  const postcode = addressObj.postcode;
+
+  return (
+    [town, city].filter(Boolean).join(", ") + (postcode ? ` ${postcode}` : "")
+  );
+}

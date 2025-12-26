@@ -1,4 +1,4 @@
-import { useLoaderData, useRevalidator } from "react-router-dom";
+import { useFetcher, useLoaderData, useRevalidator } from "react-router-dom";
 import Button from "../../components/Button";
 import OrderItem from "../../components/OrderItem";
 import { getOrder, updateOrder } from "../../Services/apiRestaurant";
@@ -7,11 +7,19 @@ import {
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
+import { useEffect } from "react";
 
 export default function OrderDetails() {
   const orderDetails = useLoaderData();
   const revalidator = useRevalidator();
-  console.log(orderDetails);
+  const fetcher = useFetcher();
+  const cartItems = fetcher.data;
+  const isLoading = fetcher.state === "loading";
+
+  useEffect(() => {
+    if (!fetcher.data) fetcher.load("/menu");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const {
     id,
@@ -22,7 +30,6 @@ export default function OrderDetails() {
     priority,
     priorityPrice,
   } = orderDetails;
-  console.log();
 
   const formattedEstimatedDelivery = formatDate(estimatedDelivery);
   const remainngTime = calcMinutesLeft(estimatedDelivery);
@@ -79,7 +86,15 @@ export default function OrderDetails() {
       {/* Order Items */}
       <div className="mb-8 space-y-8">
         {cart.map((item) => (
-          <OrderItem key={item.pizzaId} item={item} />
+          <OrderItem
+            key={item.pizzaId}
+            item={item}
+            ingredient={
+              cartItems?.find((cartItem) => item.pizzaId === cartItem.id)
+                .ingredients
+            }
+            isIngredientsLoading={isLoading}
+          />
         ))}
       </div>
 
@@ -106,9 +121,11 @@ export default function OrderDetails() {
       </div>
 
       <div className="flex justify-end">
-        <Button className="py-2 px-5" onClick={updateOrderPriority}>
-          Make Priority
-        </Button>
+        {!priority && (
+          <Button className="py-2 px-5" onClick={updateOrderPriority}>
+            Make Priority
+          </Button>
+        )}
       </div>
     </div>
   );
